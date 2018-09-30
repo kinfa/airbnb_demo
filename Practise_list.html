@@ -33,4 +33,36 @@
         </div> <!-- end of row-->
     </div> <!-- end of container-->
 </body>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBUvHCV0THrgqm3RrEcnXrQqKDrPjrkunE",
+        authDomain: "practise-airbnb.firebaseapp.com",
+        databaseURL: "https://practise-airbnb.firebaseio.com",
+        projectId: "practise-airbnb",
+        storageBucket: "practise-airbnb.appspot.com",
+        messagingSenderId: "648050190606"
+    };
+
+    firebase.initializeApp(config);
+    var db = firebase.firestore();
+    db.settings({timestampsInSnapshots: true});
+    
+    db.collection("bookings").get().then(function (results) {
+        results.forEach(function (doc) {
+        // doc.data() is never undefined for query doc snapshots
+            var data = doc.data();
+            var row = $('<tr></tr>');
+            $(row).append("<td>" + data['name'] + "</td>");
+            $(row).append("<td>" + data['email'] + "</td>");
+            $(row).append("<td>" + data['arrival_date'] + "</td>");
+            $(row).append("<td>" + data['no_of_days'] + "</td>");
+            $(row).append("<td>" + data['selected_item'] + "</td>");
+            $("#tblBooking tbody").append(row);
+        });
+    });
+</script>
+
 </html>
